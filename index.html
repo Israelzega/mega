@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Organic Ecom 3.0 - Domina TikTok Orgánico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #2C3E50; /* Fondo principal Gris Carbón Oscuro */
+            color: #ECF0F1; /* Texto principal Gris Muy Claro */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .accent-color { color: #89d1cd; }
+        .bg-accent-color { background-color: #89d1cd; }
+        .border-accent-color { border-color: #89d1cd; }
+
+        .hidden-initially {
+            display: none;
+        }
+
+        #mainHeader { 
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-color: #2C3E50; /* Header con fondo gris carbón */
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); /* Sombra más notoria para el header */
+        }
+        #mainHeader.header-is-visible {
+            opacity: 1;
+        }
+
+        .video-intro-text {
+            text-align: center;
+            margin-bottom: 2rem; 
+            font-size: 1.75rem; 
+            font-weight: 700; 
+            color: #89d1cd; 
+            text-shadow: 0 0 10px rgba(137, 209, 205, 0.6); 
+            opacity: 1; 
+            transition: opacity 0.5s ease-out; 
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Max width for the video container */
+            margin: 0 auto; /* Center the container */
+            border-radius: 0.75rem; 
+            overflow: hidden;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0, 0.3), 0 8px 15px -8px rgba(0,0,0, 0.3); 
+        }
+        
+        .wistia_responsive_padding { /* Used to maintain aspect ratio */
+            padding:56.25% 0 0 0; /* 16:9 Aspect Ratio (9 / 16 * 100) */
+            position:relative;
+        }
+        .wistia_responsive_wrapper { /* Wrapper to hold the Wistia player */
+            height:100%;
+            left:0;
+            position:absolute;
+            top:0;
+            width:100%;
+        }
+
+        #initialVideoPrompt {
+            text-align: center;
+            padding: 2rem 1rem;
+            opacity: 1;
+            transition: opacity 0.8s ease-out, transform 0.5s ease-out;
+            margin-bottom: 2rem; /* Espacio antes de que aparezca el contenido principal */
+        }
+        #initialVideoPrompt.hidden-prompt {
+            opacity: 0;
+            transform: translateY(20px);
+            /* display: none; se maneja en JS después de la transición */
+        }
+        #initialVideoPrompt .prompt-icon {
+            font-size: 3rem;
+            color: #89d1cd;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        #initialVideoPrompt .prompt-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ECF0F1;
+        }
+
+
+        .content-section { 
+            opacity: 0; 
+            transition: opacity 1.2s ease-in-out; 
+        }
+        .content-section.visible { 
+            opacity: 1;
+        }
+        .comment {
+            background-color: #34495E; 
+            border-left: 4px solid #89d1cd; 
+            padding: 1.75rem; 
+            margin-bottom: 1.75rem;
+            border-radius: 0.5rem; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        .button-primary {
+            background-color: #89d1cd; 
+            color: #2C3E50; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: 0.375rem;
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            transition: all 0.25s ease-out;
+            box-shadow: 0 4px 12px rgba(137, 209, 205, 0.3); 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem; 
+            text-decoration: none; /* Asegurar que los botones no tengan subrayado de enlace */
+        }
+        .button-primary:hover {
+            background-color: #70c1bd; 
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(137, 209, 205, 0.4); 
+        }
+        .button-primary.large { 
+             padding: 1.125rem 2.75rem; 
+             font-size: 1.125rem; 
+        }
+        .button-primary.large i {
+            margin-left: 0.75rem; 
+        }
+
+        .countdown-timer-container { 
+            background-color: #34495E; 
+            padding: 2.5rem; 
+            border-radius: 0.75rem; 
+            margin-bottom: 3rem; 
+            box-shadow: 0 0 25px rgba(0,0,0, 0.2); 
+            border: 1px solid #89d1cd; 
+        }
+        .countdown-timer h3 {
+            color: #89d1cd; 
+            font-weight: 800; 
+            font-size: 2rem; 
+            margin-bottom: 0.5rem; 
+            text-shadow: 0 0 12px rgba(137, 209, 205, 0.5); 
+        }
+        .countdown-timer .promo-subtext { 
+            font-size: 1.125rem;
+            color: #ECF0F1; 
+            margin-bottom: 1.5rem;
+        }
+        .countdown-item { 
+            display: inline-block;
+            text-align: center;
+        }
+        .countdown-item span { 
+            display: block;
+            font-weight: 900; 
+            color: #89d1cd; 
+            line-height: 1;
+        }
+        .countdown-item div { 
+            font-size: 0.8rem; 
+            color: #95A5A6; 
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+            letter-spacing: 0.05em;
+        }
+        
+        #countdown .countdown-item { margin: 0 1.25rem; } 
+        #countdown .countdown-item span { font-size: 3.5rem; } 
+        #countdown .countdown-item div { font-size: 0.9rem; margin-top: 0.3rem;}
+        
+        .header-countdown .countdown-item {
+            background-color: rgba(137, 209, 205, 0.15); 
+            border: 1px solid #89d1cd; 
+            border-radius: 0.375rem; 
+            padding: 0.3rem 0.6rem; 
+            margin: 0 0.3rem; 
+        }
+        .header-countdown .countdown-item span { font-size: 1.375rem; color: #89d1cd; } 
+        .header-countdown .countdown-item div { font-size: 0.65rem; color: #95A5A6; }
+
+        .section-dark-bg {
+            background-color: #34495E; 
+            padding: 4rem 2rem; 
+            border-radius: 0.75rem;
+            margin-bottom: 3rem; 
+            color: #ECF0F1; 
+        }
+         .section-light-bg { 
+            background-color: #F4F6F6; 
+            color: #2C3A47; 
+            padding: 4rem 2rem; 
+            border-radius: 0.75rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        }
+        .section-title {
+            font-size: 2.75rem; 
+            font-weight: 800; 
+            margin-bottom: 2.5rem; 
+            text-align: center;
+            letter-spacing: -0.025em; 
+        }
+        .section-title.light-text { color: #ECF0F1; } 
+        .section-title.dark-text { color: #2C3A47; } 
+
+        .section-title .highlight { color: #89d1cd; } 
+        
+        .list-checkmark li {
+            position: relative;
+            padding-left: 36px; 
+            margin-bottom: 1.125rem; 
+            font-size: 1.125rem; 
+            line-height: 1.7; 
+        }
+        .list-checkmark li::before {
+            font-family: "Font Awesome 6 Free"; 
+            content: '\f058'; 
+            font-weight: 900; 
+            position: absolute;
+            left: 0;
+            color: #89d1cd; 
+            font-size: 22px; 
+            top: 4px; 
+        }
+        .text-shadow-accent { 
+            text-shadow: 0px 0px 12px rgba(137, 209, 205, 0.7); 
+        }
+        .gallery-image-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #4A6572; 
+        }
+        .gallery-image-container img { 
+            width: 100%;
+            height: auto; 
+            max-height: 400px; 
+            object-fit: contain; 
+            /* Fallback for broken images */
+            onerror: "this.onerror=null;this.src='https://placehold.co/400x300/4A6572/ECF0F1?text=Imagen+no+disponible';"
+        }
+        .gallery-image-container:hover {
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 15px 30px rgba(137, 209, 205, 0.2);
+        }
+        .gallery-caption {
+            background-color: rgba(44, 62, 80, 0.9); 
+            color: #ECF0F1; 
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+        }
+        .mentor-text-container { 
+            text-align: left; 
+        }
+        .course-content-accordion details {
+            background-color: #34495E; 
+            margin-bottom: 0.75rem; 
+            border-radius: 0.5rem; 
+            border: 1px solid #4A6572; 
+            transition: background-color 0.2s ease;
+        }
+         .course-content-accordion details:hover {
+            background-color: #4A6572; 
+        }
+        .course-content-accordion summary {
+            padding: 1.25rem; 
+            font-weight: 600;
+            font-size: 1.125rem; 
+            color: #89d1cd; 
+            cursor: pointer;
+            list-style: none; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .course-content-accordion summary::-webkit-details-marker { display: none; } 
+        .course-content-accordion summary::marker { display: none; } 
+        .course-content-accordion summary:after { 
+            content: '\f078'; 
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            transition: transform 0.3s ease;
+            font-size: 0.9em; 
+        }
+        .course-content-accordion details[open] summary:after {
+            transform: rotate(180deg);
+        }
+        .course-content-accordion .module-lessons {
+            padding: 0 1.5rem 1.5rem 2.5rem; 
+            color: #BDC3C7; 
+            border-top: 1px solid #4A6572;
+            margin-top: 0.5rem;
+        }
+        .course-content-accordion .module-lessons li {
+            padding: 0.75rem 0; 
+            border-bottom: 1px dashed #4A6572; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .course-content-accordion .module-lessons li:last-child {
+            border-bottom: none;
+        }
+        .course-content-accordion .lesson-duration {
+            font-size: 0.875rem;
+            color: #95A5A6; 
+            margin-left: 1rem;
+        }
+        .course-content-accordion .lesson-link { 
+            color: #89d1cd; 
+            font-weight: 600; 
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.2s ease;
+        }
+        .course-content-accordion .lesson-link:hover {
+            background-color: rgba(137, 209, 205, 0.15);
+            text-decoration: none;
+        }
+
+        .faq-item {
+            background-color: #34495E; 
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #4A6572; 
+        }
+        .faq-question {
+            padding: 1.25rem; 
+            font-weight: 600;
+             font-size: 1.125rem; 
+            color: #89d1cd; 
+            cursor: pointer;
+            display: flex; 
+            justify-content: space-between;
+        }
+         .faq-item details[open] .faq-question {
+            border-bottom: 1px solid #4A6572;
+        }
+        .faq-answer {
+            padding: 1.25rem 1.5rem 1.5rem 2.5rem; 
+            color: #BDC3C7; 
+            line-height: 1.7; 
+        }
+        footer .text-gray-700, footer .text-gray-600 {
+             color: #34495E; 
+        }
+        footer .text-gray-400 { 
+             color: #7F8C8D; 
+        }
+        .price-box-dark {
+            background-color: #2C3E50; 
+            color: #ECF0F1; 
+        }
+        .price-box-dark .text-gray-400 { 
+            color: #BDC3C7;
+        }
+         .price-box-dark .text-green-400 { 
+            color: #2ECC71; 
+         }
+         
+         .coupon-text-header {
+            font-size: 0.75rem; /* 12px */
+            color: #89d1cd;
+            margin-bottom: 0.25rem; /* 4px */
+            display: block;
+         }
+         .coupon-text-main {
+            font-size: 0.875rem; /* 14px */
+            color: #89d1cd;
+            margin-bottom: 0.75rem; /* 12px */
+            font-weight: 600;
+         }
+         .final-cta-section { /* This section was previously used as a direct replacement, now moved to the end */
+            background-color: #34495E;
+            border: 2px solid #89d1cd;
+            border-radius: 0.75rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem; /* Ensure spacing from content above */
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(137, 209, 205, 0.2);
+         }
+         .final-cta-section h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #89d1cd;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(137, 209, 205, 0.5);
+         }
+         .final-cta-section p {
+            font-size: 1.25rem;
+            color: #ECF0F1;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+         }
+         .content-divider-section { /* New simple divider section */
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+         }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="mainHeader" class="py-2 shadow-md sticky top-0 z-50 hidden-initially"> 
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="w-1/3"> 
+                 <span class="text-md font-bold accent-color leading-tight">Organic<br>Ecom</span>
+            </div>
+            
+            <div class="text-center hidden sm:block w-1/3"> 
+                <div id="headerCountdown" class="header-countdown"> 
+                    <div class="countdown-item"><span id="headerDays">00</span><div>Días</div></div>
+                    <div class="countdown-item"><span id="headerHours">00</span><div>Hrs</div></div>
+                    <div class="countdown-item"><span id="headerMinutes">00</span><div>Min</div></div>
+                    <div class="countdown-item"><span id="headerSeconds">00</span><div>Seg</div></div>
+                </div>
+                <p class="text-xs font-semibold accent-color uppercase tracking-wider mt-1">LA ESTRATEGIA ORGÁNICA QUE CAMBIARÁ TU VIDA</p>
+            </div>
+
+            <div class="text-right w-1/3">
+                <span class="coupon-text-header">Cupón: EOS12</span>
+                <a href="https://mega.systeme.io/paginapago" target="_blank" class="button-primary px-4 py-2"> 
+                    Quiero Mi Plaza <i class="fas fa-tags"></i>
+                </a>
+                <p class="text-xs text-gray-400 mt-1">¡Plazas Limitadas!</p> 
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 mt-8">
+
+        <div id="videoSectionContainer" class="mb-16"> 
+            <p id="videoIntro" class="video-intro-text">
+                Mira este video y descubre cómo ganar dinero con TikTok sin invertir en publicidad.
+            </p>
+            <!-- Contenedor del Video Wistia Modificado -->
+            <div class="video-container">
+                <div class="wistia_responsive_padding">
+                    <div class="wistia_responsive_wrapper">
+                        <div class="wistia_embed wistia_async_rrkhy75kvx" style="height:100%;width:100%;">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Nuevo prompt inicial debajo del video -->
+        <div id="initialVideoPrompt">
+            <i class="fas fa-arrow-up prompt-icon"></i>
+            <p class="prompt-text">¡Atención! Mira el video para descubrir el secreto.</p>
+        </div>
+
+        <div id="courseInfoSection" class="content-section hidden-initially">
+            <div id="countdownTimerSection" class="countdown-timer-container text-center">
+                <div class="countdown-timer">
+                    <h3 class="text-2xl md:text-3xl">TIKET PROMOCIONAL CON MÁS DE <span class="font-extrabold">85%</span> DE DESCUENTO</h3>
+                    <p class="promo-subtext">Solo para las primeras 100 personas</p>
+                    <!-- Botón de compra añadido debajo del texto promocional -->
+                    <div class="my-6">
+                        <p class="coupon-text-main mb-2">Usa el Cupón: <span class="font-bold">EOS12</span> para un descuento increíble</p>
+                        <a href="https://mega.systeme.io/paginapago" target="_blank" class="button-primary large">
+                            ADQUIERE TU PLAZA AHORA <i class="fas fa-rocket ml-2"></i>
+                        </a>
+                    </div>
+                    <div id="countdown" class="mt-8"> 
+                        <div class="countdown-item"><span id="days">00</span><div>Días</div></div>
+                        <div class="countdown-item"><span id="hours">00</span><div>Horas</div></div>
+                        <div class="countdown-item"><span id="minutes">00</span><div>Min</div></div>
+                        <div class="countdown-item"><span id="seconds">00</span><div>Seg</div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <section class="mb-16 relative text-white rounded-lg overflow-hidden min-h-[400px] md:min-h-[450px] flex items-center" style="background-color: #34495E;">
+                <div class="container mx-auto px-6 py-16 sm:py-24 relative z-10 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0 md:pr-10">
+                        <h2 class="text-4xl lg:text-5xl font-extrabold accent-color mb-6 leading-tight text-shadow-accent">
+                            La <span class="text-white">Estrategia</span> que te Cambiará la <span class="text-white">Vida</span>
+                        </h2>
+                        <p class="text-gray-200 text-xl lg:text-2xl leading-relaxed">¿Te imaginas generar ingresos desde tu móvil, sin apenas inversión ni riesgo y con pocas horas de "trabajo"? Deja de imaginártelo porque es real.</p>
+                    </div>
+                    <div class="md:w-1/2 text-center"> 
+                        <img src="https://i.postimg.cc/3xbMVVnt/des.png" alt="[Imagen de la nueva estrategia]" class="max-w-full h-auto rounded-md shadow-lg transform transition-transform duration-500 hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x300/34495E/ECF0F1?text=Estrategia+Visual';"> 
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-16 section-dark-bg text-center">
+                <h2 class="section-title light-text">Con tu <span class="highlight">Mentor Experto</span> Aprenderás:</h2>
+                <div class="text-center md:w-4/5 lg:w-3/4 mx-auto mentor-text-container"> 
+                    <p class="mb-6 text-xl leading-relaxed"> 
+                        Todo lo que necesitas saber desde 0 para ganar dinero con tu tienda online desde casa. Sin gasto de publicidad, sin riesgo de perder dinero y con un margen de beneficio de hasta el 60-70%.
+                    </p>
+                    <p class="mb-6 text-xl leading-relaxed">
+                        Obtendrás más de 300 videos (futuras actualizaciones incluidas) para que consigas tus objetivos.
+                    </p>
+                    <p class="text-2xl leading-relaxed accent-color font-bold">
+                        ¡Estás a solo un producto de que te cambie la vida!
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-16 section-light-bg">
+                <h2 class="section-title dark-text">Capturas de <span class="highlight">Alumnos Reales</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="gallery-image-container">
+                        <img src="https://i.postimg.cc/02N4pZCx/Captura-de-pantalla-2024-05-24-192851.png" alt="[Captura de alumno real 1]" onerror="this.onerror=null;this.src='https://placehold.co/400x300/4A6572/ECF0F1?text=Resultado+Alumno+1';">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="https://i.postimg.cc/KzRKP64B/Whats-App-Image-2022-11-07-at-6-07-13-PM.jpg" alt="[Captura de alumno real 2]" onerror="this.onerror=null;this.src='https://placehold.co/400x300/4A6572/ECF0F1?text=Resultado+Alumno+2';">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="https://i.postimg.cc/L5QNCKVS/Whats-App-Image-2023-09-30-at-20-10-13.jpg" alt="[Captura de alumno real 3]" onerror="this.onerror=null;this.src='https://placehold.co/400x300/4A6572/ECF0F1?text=Resultado+Alumno+3';">
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="mb-16 section-light-bg"> 
+                 <h2 class="section-title dark-text">¿Por qué es tan importante <span class="highlight">"TikTok Orgánico"</span>?</h2>
+                <p class="mb-8 text-xl leading-relaxed max-w-3xl mx-auto text-center">
+                    Para vender hay que llevar tráfico masivo a tu tienda online, y eso, cuesta muchísimo dinero en publicidad. Después de gastarme miles de euros en publicidad cada mes, tener muchos baneos en Facebook, probar cientos de productos pensé... ¿Habrá alguna manera/estrategia de generar todo este tráfico gratis?
+                    <br><strong class="accent-color font-bold text-2xl block mt-6">¡Y LA ENCONTRÉ! Encontré la estrategia que me permite vender sin gastar ni 1€ en publicidad y con un margen de beneficio 5 veces mayor.</strong>
+                </p>
+
+                <div class="grid md:grid-cols-5 gap-10 items-center mt-16"> 
+                    <div class="md:col-span-3">
+                        <h3 class="text-3xl font-bold mb-6">¿Pero y cómo podré <span class="accent-color">ganar dinero</span>?</h3>
+                        <p class="mb-6 text-lg leading-relaxed">
+                            Bien, tendrás que crear videos en TikTok que gracias a aplicar mi estrategia un gran porcentaje serán virales. Estos videos virales generarán tráfico a tu tienda y algunos visitantes comprarán tu producto, es decir, ganarás dinero. ¿Parece fácil verdad?
+                        </p>
+                        <p class="mb-5 text-lg font-semibold">Puede llegar a serlo si sabes hacer a la perfección los siguientes pasos:</p>
+                        <ul class="list-checkmark space-y-3 mb-8 text-lg"> 
+                            <li>Encontrar productos óptimos para TikTok orgánico.</li>
+                            <li>Encontrar proveedores de calidad.</li>
+                            <li>Saber estructurar los videos para retener audiencia y que sean virales.</li>
+                            <li>Entender a la perfección el algoritmo de TikTok para beneficiarte de ello.</li>
+                            <li>Crear una web limpia y profesional que convierta a la perfección.</li>
+                        </ul>
+                    </div>
+
+                    <div class="md:col-span-2 price-box-dark p-8 rounded-xl shadow-2xl border-2 border-accent-color text-center transform hover:scale-105 transition-transform duration-300"> 
+                        <h3 class="text-4xl font-extrabold accent-color mb-4 text-shadow-accent">¡CONSIGUE TU PLAZA!</h3>
+                        <p class="text-gray-400 text-xl line-through mb-1">Precio Regular: $247 USD</p> 
+                        <p class="text-7xl font-black mb-3"><span class="accent-color">$27</span> USD</p>
+                        <p class="text-green-400 font-semibold text-2xl mb-6">¡AHORRA MÁS DEL 85% HOY!</p>
+                        <p class="coupon-text-main">Usa el Cupón: <span class="font-bold">EOS12</span></p>
+                        
+                        <a href="https://mega.systeme.io/paginapago" target="_blank" class="button-primary large w-full text-xl py-4 mb-2">
+                            ADQUIERE TU PLAZA <i class="fas fa-ticket-alt"></i>
+                        </a>
+                        <p class="text-sm mt-4">Más de 300 videos y acceso vitalicio.</p>
+                        <div class="mt-5 text-md"> 
+                            La oferta termina en: <span id="offerEndPricetag" class="font-bold accent-color">7 días</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-16 pt-10 border-t border-gray-300"> 
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6">Esto es para ti si:</h3>
+                            <ul class="list-checkmark space-y-3 text-lg">
+                                <li>Quieres generar ingresos online sin invertir apenas dinero y con 0 riesgo de perder capital.</li>
+                                <li>Quieres cambiar el rumbo de tu vida y conseguir la libertad financiera tan deseada.</li>
+                                <li>Estas dispuesto a dejarte la piel y a escucharme para que con el seguimiento ofrecido consigas ganar dinero desde casa.</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h3 class="text-3xl font-bold mb-6">Esto <span class="text-red-500">NO</span> es para ti si:</h3>
+                            <ul class="list-checkmark space-y-3 text-lg" style="--fa-color: #ef4444;"> 
+                                <li>Estas poco o nada comprometido y lo quieres todo hecho y no estas dispuesto a escucharme.</li>
+                                <li>Tienes la falsa idea de hacerte rico de la noche a la mañana sin apenas esfuerzo ni dedicación.</li>
+                                <li>Si vas a tirar la toalla enseguida porque esperas que tus resultados aparezcan en el primer producto o web que montes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-16 section-dark-bg">
+                <h2 class="section-title light-text">Contenido del Curso <span class="highlight">Organic Ecom 3.0</span></h2>
+                <div class="course-content-accordion max-w-4xl mx-auto"> 
+                    <details>
+                        <summary>ORGANIC ECOM 3.0 - INTRODUCCIÓN</summary>
+                        <ul class="module-lessons">
+                            <li>Bienvenida <span class="lesson-duration">(1:15)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Qué vas a aprender en Organic Ecom? <span class="lesson-duration">(4:12)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Cómo funciona el seguimiento con el mentor? <span class="lesson-duration">(4:41)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Cómo se accede a las llamadas semanales y cómo funcionan? <span class="lesson-duration">(4:19)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Uso de mi número para pedir mi opinión <span class="lesson-duration">(3:10)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Expectativas y resultados <span class="lesson-duration">(3:46)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Qué incluye la formación y qué duración tienen los servicios? Renovación del seguimiento <span class="lesson-duration">(4:37)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Por qué la formación tiene este orden y no otro? <span class="lesson-duration">(2:30)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Formación al 90% <span class="lesson-duration">(3:32)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                        </ul>
+                    </details>
+                    <details>
+                        <summary>LAS REGLAS QUE NADIE DICE Y SON LA CLAVE</summary>
+                         <ul class="module-lessons">
+                            <li>¿Cuántas cuentas puedo tener en TikTok por dispositivo? <span class="lesson-duration">(4:11)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Cuidado con las Cuentas Duplicadas <span class="lesson-duration">(1:52)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Nunca se eliminan cuentas <span class="lesson-duration">(0:56)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Puedo Tener la Cuenta en Varios Dispositivos a la vez? <span class="lesson-duration">(1:51)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Podemos Modificar Los Videos o Borrarlos? <span class="lesson-duration">(2:42)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Comprar seguidores y LIVES? <span class="lesson-duration">(1:42)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Calentar Cuentas <span class="lesson-duration">(3:52)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>No hacer contenido inapropiado <span class="lesson-duration">(1:16)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>No Reutilizar Clips pero... <span class="lesson-duration">(5:00)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Reutilizando Algunos Clips <span class="lesson-duration">(12:03)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Cuántos vídeos subo al día? <span class="lesson-duration">(2:47)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿A qué hora publico los vídeos? <span class="lesson-duration">(2:18)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                        </ul>
+                    </details>
+                     <details>
+                        <summary>CUENTAS DE TIKTOK PROFESIONALES</summary>
+                        <ul class="module-lessons">
+                            <li>¿Cómo creamos las cuentas de tiktok? <span class="lesson-duration">(3:18)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Cuentas RRSS 1 Solo Producto <span class="lesson-duration">(5:30)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Creando cuenta de tiktok <span class="lesson-duration">(2:59)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Qué apodo y nombre ponemos? <span class="lesson-duration">(5:27)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Calentar Cuentas <span class="lesson-duration">(0:47)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Qué foto de perfil hay que poner? <span class="lesson-duration">(1:41)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Creando foto de perfil en directo <span class="lesson-duration">(7:56)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Descripción y BIO <span class="lesson-duration">(3:07)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Cuándo ponemos la foto de perfil? <span class="lesson-duration">(1:19)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Truco de los Borradores <span class="lesson-duration">(0:45)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>¿Cómo poner el enlace a los 1000 seguidores? <span class="lesson-duration">(1:34)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Error al vincular Tiktok con IG y YT <span class="lesson-duration">(1:27)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                            <li>Palabras clave y uso de # <span class="lesson-duration">(6:25)</span> <a href="#" class="lesson-link">COMENZAR</a></li>
+                        </ul>
+                    </details>
+                </div>
+                <p class="text-center text-xl mt-8 font-semibold accent-color">¡Y mucho, mucho más contenido de valor!</p>
+            </section>
+
+            <section class="mb-16 section-light-bg"> 
+                <h2 class="section-title dark-text">¿Qué Obtendrás con <span class="highlight">esta Formación</span>?</h2>
+                <div class="grid md:grid-cols-2 gap-x-10 gap-y-10 max-w-5xl mx-auto"> 
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"> 
+                        <h4 class="text-2xl font-bold accent-color mb-3 flex items-center"><i class="fas fa-video mr-3 text-3xl"></i>Más de 15 horas de contenido grabado</h4>
+                        <p class="leading-relaxed text-lg">Aprende dropshipping orgánico paso a paso. (Contenido para siempre y actualizaciones futuras).</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <h4 class="text-2xl font-bold accent-color mb-3 flex items-center"><i class="fas fa-lightbulb mr-3 text-3xl"></i>Estrategias Exclusivas de Contenido Viral</h4>
+                        <p class="leading-relaxed text-lg">Descubre los secretos para crear videos que capturan la atención y se comparten masivamente en TikTok.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <h4 class="text-2xl font-bold accent-color mb-3 flex items-center"><i class="fas fa-chart-line mr-3 text-3xl"></i>Casos de Estudio Reales y Detallados</h4>
+                        <p class="leading-relaxed text-lg">Analiza campañas exitosas y aprende de ejemplos prácticos para replicar resultados en tus propios proyectos.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <h4 class="text-2xl font-bold accent-color mb-3 flex items-center"><i class="fas fa-cogs mr-3 text-3xl"></i>Plantillas y Recursos Optimizados</h4>
+                        <p class="leading-relaxed text-lg">Ahorra tiempo y esfuerzo con plantillas de video, checklists y guías listas para usar y potenciar tu crecimiento.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Nuevo separador temático donde antes estaba la imagen promocional -->
+            <section class="content-divider-section text-center">
+                <div class="container mx-auto px-6">
+                    <i class="fas fa-seedling fa-3x accent-color mb-4"></i>
+                    <p class="text-2xl font-semibold accent-color">Cultiva tu Éxito Orgánico Paso a Paso</p>
+                    <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Cada módulo te acerca más a dominar las estrategias que transformarán tu presencia en TikTok.</p>
+                </div>
+            </section>
+
+            <section class="mb-16 section-dark-bg text-center">
+                 <h2 class="section-title light-text"><span class="highlight">Plazas Limitadas</span>, Reserva tu Plaza</h2>
+                 <p class="text-2xl mb-8 leading-relaxed">Formación/Mentoría Organic Ecom + Acceso Vitalicio y Actualizaciones.</p>
+                 <p class="text-xl mb-10 leading-relaxed">No solo estás adquiriendo una formación de alto valor, sino el conocimiento para transformar tu presencia online.</p>
+                 <a href="https://mega.systeme.io/paginapago" target="_blank" class="button-primary large text-2xl py-6 px-12"> 
+                    OBTÉN TU PLAZA DESDE $27 USD <i class="fas fa-lock-open ml-3"></i>
+                </a>
+                <p class="mt-3 coupon-text-main">¡No olvides tu Cupón: EOS12!</p>
+            </section>
+
+            <section class="mb-16 section-light-bg"> 
+                <h2 class="section-title dark-text">Preguntas <span class="highlight">Frecuentes</span></h2>
+                <div class="max-w-4xl mx-auto space-y-6"> 
+                    <div class="faq-item bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300"> 
+                        <details>
+                            <summary class="faq-question">¿Cuánto dinero recomiendas tener para empezar?</summary>
+                            <p class="faq-answer">Recomiendo a mis alumnos tener al menos 50€/100€, si es más, muchísimo mejor. Este curso se enfoca en estrategias orgánicas, minimizando la inversión inicial en publicidad.</p>
+                        </details>
+                    </div>
+                    <div class="faq-item bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <details>
+                            <summary class="faq-question">¿Cuántos de tus alumnos consiguen ganar dinero con tu estrategia?</summary>
+                            <p class="faq-answer">El éxito depende del esfuerzo individual y la aplicación de las estrategias. Proveemos todas las herramientas y conocimientos; los resultados varían según la dedicación y el mercado.</p>
+                        </details>
+                    </div>
+                     <div class="faq-item bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <details>
+                            <summary class="faq-question">¿Hay devolución del dinero del curso?</summary>
+                            <p class="faq-answer">No, el conocimiento dado en esta formación y el acceso a los materiales es algo que una vez se otorga, no puede recuperarse. Por lo tanto, no se ofrecen devoluciones. Confiamos en el valor del curso y solo queremos estudiantes comprometidos con su aprendizaje y éxito.</p>
+                        </details>
+                    </div>
+                     <div class="faq-item bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <details>
+                            <summary class="faq-question">¿Puedo compaginarlo con mi trabajo o estudios?</summary>
+                            <p class="faq-answer">Sí, el curso está diseñado para que puedas aprender a tu propio ritmo. Con 1 o 2 horas al día puedes avanzar significativamente, pero a mayor dedicación, más rápidos y potencialmente mayores serán tus resultados.</p>
+                        </details>
+                    </div>
+                     <div class="faq-item bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <details>
+                            <summary class="faq-question">¿Puedo pagar el curso fraccionado?</summary>
+                            <p class="faq-answer">No, el acceso al curso Organic Ecom 3.0 se realiza mediante un pago único. Esto te da acceso completo a todo el contenido, materiales y futuras actualizaciones sin pagos adicionales.</p>
+                        </details>
+                    </div>
+                     <div class="faq-item bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <details>
+                            <summary class="faq-question">¿Cuánto tiempo dura el curso?</summary>
+                            <p class="faq-answer">El curso contiene más de 15 horas de video bajo demanda. Tienes acceso vitalicio al material, incluyendo todas las futuras actualizaciones, para que puedas aprender y repasar a tu propio ritmo.</p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-16 section-dark-bg"> 
+                <h2 class="section-title light-text">Testimonios de <span class="highlight">Alumnos Satisfechos</span></h2>
+                 <p class="text-center text-gray-300 text-xl mb-12 max-w-3xl mx-auto leading-relaxed"> 
+                    Ellos ya están aplicando la estrategia y cambiando sus vidas. ¡Tú puedes ser el siguiente!
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"> 
+                    <div class="comment hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <img src="https://placehold.co/60x60/89d1cd/2C3E50?text=LE" alt="[Avatar de Laura E.]" class="w-14 h-14 rounded-full mr-4 border-2 border-accent-color">
+                            <div>
+                                <p class="font-semibold text-xl text-white">Laura E.</p>
+                                <p class="text-sm text-gray-400">Emprendedora Digital</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-lg leading-relaxed">"¡Este curso es oro puro! Las estrategias de TikTok son súper efectivas."</p>
+                    </div>
+                    <div class="comment hover:shadow-xl transition-shadow duration-300">
+                         <div class="flex items-center mb-4">
+                            <img src="https://placehold.co/60x60/89d1cd/2C3E50?text=RM" alt="[Avatar de Roberto M.]" class="w-14 h-14 rounded-full mr-4 border-2 border-accent-color">
+                            <div>
+                                <p class="font-semibold text-xl text-white">Roberto M.</p>
+                                <p class="text-sm text-gray-400">Creador de Contenido</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-lg leading-relaxed">"Nunca pensé que podría vender tanto sin gastar en publicidad. ¡Gracias por las técnicas!"</p>
+                    </div>
+                    <div class="comment md:col-span-2 lg:col-span-1 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <img src="https://placehold.co/60x60/89d1cd/2C3E50?text=CS" alt="[Avatar de Carla S.]" class="w-14 h-14 rounded-full mr-4 border-2 border-accent-color">
+                            <div>
+                                <p class="font-semibold text-xl text-white">Carla S.</p>
+                                <p class="text-sm text-gray-400">Dueña de Tienda Online</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-lg leading-relaxed">"La estrategia de TikTok Orgánico funciona. Mis ventas se dispararon y entendí el algoritmo."</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de llamado a la acción final movida aquí, antes del footer -->
+            <section class="final-cta-section">
+                <h3>¿Listo para Transformar tu Enfoque en TikTok?</h3>
+                <p>Organic Ecom 3.0 te proporciona las herramientas, estrategias y conocimientos para dominar el algoritmo y generar ingresos de forma orgánica. ¡No dejes pasar esta oportunidad única de aprender de los expertos y cambiar tu futuro financiero!</p>
+                <a href="https://mega.systeme.io/paginapago" target="_blank" class="button-primary large text-xl py-5 px-10">
+                    SÍ, ¡QUIERO ACCEDER AHORA! <i class="fas fa-arrow-right ml-3"></i>
+                </a>
+                <p class="mt-4 coupon-text-main">Aplica el cupón <span class="font-bold">EOS12</span> al pagar.</p>
+            </section>
+
+            <footer class="relative py-20 md:py-24 mt-16 text-center" style="background-image: url('https://i.postimg.cc/PfKpX2ZX/back-footer-1.png'); background-size: cover; background-position: center; background-repeat: no-repeat;" onerror="this.style.backgroundImage='url(https://placehold.co/1200x300/2C3E50/ECF0F1?text=Footer+Background)'">
+                <div class="relative z-10">
+                    <p class="text-base mb-1">&copy; <span id="currentYear"></span> Organic Ecom 3.0. Todos los derechos reservados.</p>
+                    <p class="text-sm">Tu camino al éxito orgánico.</p>
+                </div>
+            </footer>
+        </div> 
+    </div>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const mainHeader = document.getElementById('mainHeader');
+        const videoIntroText = document.getElementById('videoIntro');
+        const courseInfoSection = document.getElementById('courseInfoSection');
+        const initialVideoPrompt = document.getElementById('initialVideoPrompt'); // Referencia al nuevo prompt
+        
+        const minimumWatchTime = 330; // Tiempo en segundos para desbloquear el contenido (5 minutos y 30 segundos)
+        let unlockTimerId = null; 
+        let contentUnlocked = false;
+
+        // Función para desbloquear el contenido principal de la página
+        function unlockContent() {
+            if (contentUnlocked) return; // Si ya está desbloqueado, no hacer nada
+            contentUnlocked = true;
+            
+            // Ocultar el texto introductorio del video
+            if (videoIntroText) {
+                videoIntroText.style.opacity = '0';
+                setTimeout(() => {
+                    if (videoIntroText) videoIntroText.style.display = 'none';
+                }, 500); // Esperar a que termine la transición de opacidad
+            }
+
+            // Ocultar el prompt inicial del video
+            if (initialVideoPrompt) {
+                initialVideoPrompt.classList.add('hidden-prompt');
+                setTimeout(() => {
+                    initialVideoPrompt.style.display = 'none';
+                }, 800); // Esperar a que termine la transición de opacidad del prompt
+            }
+
+            // Mostrar el encabezado principal
+            if (mainHeader) {
+                mainHeader.classList.remove('hidden-initially'); 
+                requestAnimationFrame(() => { // Usar requestAnimationFrame para asegurar que el navegador esté listo para la transición
+                    if (mainHeader) mainHeader.classList.add('header-is-visible'); 
+                });
+            }
+            
+            // Mostrar la sección de información del curso
+            if (courseInfoSection) { 
+                courseInfoSection.classList.remove('hidden-initially'); 
+                requestAnimationFrame(() => {
+                    if (courseInfoSection) courseInfoSection.classList.add('visible'); 
+                });
+            }
+            
+            console.log("Contenido desbloqueado.");
+            startMainCountdownTimer(); // Iniciar el contador principal
+            startHeaderCountdownTimer(); // Iniciar el contador del encabezado
+        }
+        
+        // Iniciar el temporizador para desbloquear el contenido después de minimumWatchTime
+        function startUnlockTimer() {
+             if (!contentUnlocked) { 
+                console.log(`Iniciando temporizador de desbloqueo de ${minimumWatchTime} segundos.`);
+                if(unlockTimerId) clearTimeout(unlockTimerId); // Limpiar cualquier temporizador existente
+                unlockTimerId = setTimeout(unlockContent, minimumWatchTime * 1000);
+            }
+        }
+       
+        // Event listener para cuando la página se haya cargado completamente
+        window.addEventListener('load', () => {
+             startUnlockTimer(); // Comenzar el temporizador de desbloqueo
+        });
+
+        // Función para inicializar un contador regresivo
+        function initializeCountdown(endDate, daysEl, hoursEl, minutesEl, secondsEl, offerEndPricetagElId) {
+            const offerEndPricetagEl = offerEndPricetagElId ? document.getElementById(offerEndPricetagElId) : null;
+            // Obtener el contenedor del contador para poder modificarlo si la oferta termina
+            const countdownElementContainer = daysEl ? daysEl.closest('#countdownTimerSection .countdown-timer > div#countdown, #headerCountdown') : null;
+
+            let intervalId = null; 
+
+            function update() {
+                const now = new Date().getTime();
+                const distance = endDate - now;
+
+                // Si la cuenta regresiva ha terminado
+                if (distance < 0) {
+                    if (countdownElementContainer) { 
+                        if(countdownElementContainer.id === 'countdown') { // Contador principal
+                             const parentTimerContainer = document.getElementById('countdownTimerSection');
+                             if (parentTimerContainer) {
+                                const timerDiv = parentTimerContainer.querySelector('.countdown-timer');
+                                if (timerDiv) {
+                                    timerDiv.innerHTML = "<h4 class='text-2xl font-bold text-red-500 py-4'>¡LA OFERTA HA TERMINADO!</h4>";
+                                }
+                             }
+                        } else if (countdownElementContainer.id === 'headerCountdown') { // Contador del encabezado
+                             countdownElementContainer.innerHTML = "<p class='text-sm text-red-500 font-semibold py-2'>Oferta Expirada</p>";
+                        }
+                    }
+                    if(offerEndPricetagEl) offerEndPricetagEl.textContent = "Oferta terminada";
+                    if(intervalId) clearInterval(intervalId); // Detener el intervalo
+                    return;
+                }
+
+                // Calcular días, horas, minutos y segundos
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Actualizar los elementos HTML del contador
+                if(daysEl) daysEl.textContent = String(days).padStart(2, '0');
+                if(hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+                if(minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+                if(secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+                
+                // Actualizar el texto del tiempo restante en la etiqueta de precio (si existe)
+                if(offerEndPricetagEl) {
+                    let timeLeftString = "";
+                    if (days > 0) {
+                        timeLeftString = `${days}d ${hours}h aprox.`;
+                    } else if (hours > 0) {
+                        timeLeftString = `${hours}h ${minutes}m aprox.`;
+                    } else {
+                         timeLeftString = `${minutes}m ${seconds}s`;
+                    }
+                    offerEndPricetagEl.textContent = timeLeftString.trim();
+                }
+            }
+            
+            update(); // Llamar a update inmediatamente para mostrar el tiempo inicial
+            intervalId = setInterval(update, 1000); // Actualizar cada segundo
+        }
+
+        // Iniciar el contador principal
+        function startMainCountdownTimer() {
+            const offerEndDate = new Date();
+            offerEndDate.setDate(offerEndDate.getDate() + 7); // Configurar la fecha de finalización para dentro de 7 días
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            if (daysEl && hoursEl && minutesEl && secondsEl) { 
+                initializeCountdown(
+                    offerEndDate,
+                    daysEl, hoursEl, minutesEl, secondsEl,
+                    'offerEndPricetag' // ID del elemento para mostrar el tiempo restante en la oferta
+                );
+            }
+        }
+        
+        // Iniciar el contador del encabezado
+        function startHeaderCountdownTimer() {
+            const offerEndDate = new Date(); 
+            offerEndDate.setDate(offerEndDate.getDate() + 7); // Configurar la fecha de finalización para dentro de 7 días
+            const headerDaysEl = document.getElementById('headerDays');
+            const headerHoursEl = document.getElementById('headerHours');
+            const headerMinutesEl = document.getElementById('headerMinutes');
+            const headerSecondsEl = document.getElementById('headerSeconds');
+
+            if (headerDaysEl && headerHoursEl && headerMinutesEl && headerSecondsEl) { 
+                 initializeCountdown(
+                    offerEndDate,
+                    headerDaysEl, headerHoursEl, headerMinutesEl, headerSecondsEl,
+                    null // No hay etiqueta de precio separada para este contador
+                );
+            }
+        }
+        
+        // Lógica para los acordeones (actualmente vacía, se podría añadir funcionalidad si se desea)
+        document.querySelectorAll('.course-content-accordion details').forEach((detail) => {
+            // Ejemplo: podrías querer cerrar otros acordeones cuando uno se abre
+        });
+         document.querySelectorAll('.faq-item details').forEach((detail) => {
+            // Similar para los FAQs
+        });
+
+    </script>
+    <!-- Nuevo script de Wistia para control del reproductor y reseteo -->
+    <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+    <script>
+    window._wq = window._wq || [];
+    _wq.push({
+      id: "rrkhy75kvx", // ID del video de Wistia
+      // Opciones del reproductor para intentar evitar "hacer clic para escuchar"
+      videoFoam: true, // Para un mejor comportamiento responsivo
+      muted: false,    // Asegurar que el video no esté silenciado por defecto en Wistia
+      volume: 1,       // Establecer el volumen al máximo por defecto en Wistia
+      // autoPlay: false, // La reproducción automática ya está desactivada al comentar video.play()
+      // silentAutoPlay: false, // Para ser explícito sobre no intentar reproducción automática silenciosa
+
+      onReady: function(video) {
+        // Reinicia el video al principio cuando está listo
+        video.time(0);
+        
+        // Comentado para evitar la reproducción automática:
+        // video.play().catch(e => console.warn("Wistia autoplay was blocked or failed:", e));
+        
+        // Agrega un listener para resetear el video si el usuario recarga la página
+        window.addEventListener('beforeunload', function() {
+          video.time(0);
+        });
+      }
+    });
+    </script>
+</body>
+</html>
