@@ -304,7 +304,6 @@
             margin-bottom: 3rem;
          }
         
-        /* Nuevos estilos para el acordeón del curso */
         .course-content-accordion details {
             background-color: #3B5368; 
             margin-bottom: 1rem; 
@@ -420,6 +419,26 @@
             transform: translateY(-2px);
         }
 
+        .button-telegram {
+            background-color: #2AABEE; /* Telegram blue */
+            color: white;
+            padding: 0.8rem 1.5rem; 
+            sm:padding: 1rem 2.5rem; 
+            border-radius: 0.375rem;
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            transition: all 0.25s ease-out;
+            box-shadow: 0 4px 12px rgba(42, 171, 238, 0.3);
+            text-decoration: none;
+            font-size: 1rem;
+            sm:font-size: 1.125rem;
+        }
+        .button-telegram:hover {
+            background-color: #1e96d4;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(42, 171, 238, 0.4); 
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -772,6 +791,28 @@
                     </div>
                 </div>
             </section>
+            
+            <!-- Nueva sección de bonos y comunidad -->
+            <section class="section-dark-bg text-center">
+                <h3 class="text-2xl sm:text-3xl font-bold mb-3 accent-color">Un Regalo Para Ti</h3>
+                <p class="text-lg sm:text-xl mb-4">Gracias por llegar hasta aquí. En el botón de abajo te dejamos los prompts en PDF.</p>
+                <div class="my-4">
+                    <i class="fas fa-arrow-down text-3xl accent-color animate-bounce"></i>
+                </div>
+                <a href="https://d1yei2z3i6k35z.cloudfront.net/12935246/6843994ba52d5_PromptbookCinematográficoVEO3xAnomalíaAI.pdf" target="_blank" class="button-primary large inline-flex items-center">
+                    <i class="fas fa-file-pdf mr-2"></i>
+                    Descargar PDF
+                </a>
+            
+                <div class="mt-12 pt-8 border-t border-gray-700 max-w-3xl mx-auto">
+                     <h4 class="text-xl sm:text-2xl font-bold mb-4">¡Únete a la Comunidad!</h4>
+                     <p class="text-lg sm:text-xl mb-6">Queremos invitarte a formar parte de nuestra comunidad: un espacio donde compartimos ideas, recursos exclusivos y contenido pensado especialmente para personas como tú.</p>
+                     <a href="https://t.me/megacomunidad1" target="_blank" class="button-telegram inline-flex items-center">
+                         <i class="fab fa-telegram-plane mr-2"></i>
+                         Unirse a Telegram
+                     </a>
+                </div>
+            </section>
 
             <section class="final-cta-section">
                 <h3>¿Listo para Transformar tu Enfoque en TikTok?</h3>
@@ -977,6 +1018,3 @@
     </script>
 </body>
 </html>
-
-</html>
-
